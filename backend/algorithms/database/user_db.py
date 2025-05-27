@@ -1,6 +1,8 @@
 import sqlite3
+import os
 
 def add_user_to_db(name, income, goal):
+    print("Database path:", os.path.abspath("db.sqlite3"))
     conn = sqlite3.connect("db.sqlite3")
     cursor = conn.cursor()
     cursor.execute(

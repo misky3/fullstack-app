@@ -1,8 +1,9 @@
 from flask import Flask
+from flask_cors import CORS
 from routes.user_routes import user_bp
 
 app = Flask(__name__)
-# CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
 
 # def get_db_connection():
 #     conn = sqlite3.connect("db.sqlite3")
