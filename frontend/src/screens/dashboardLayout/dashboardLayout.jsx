@@ -1,14 +1,16 @@
 import './dashboardLayout.css';
+import { Outlet } from 'react-router-dom';
 
 function DashboardLayout(){
     return(
-        <div>
+        <div className='topnav'>
             <div>
                 <div>
                     Hello
                 </div>
             </div>
             <hr/>
+            <Outlet/>
         </div>
     );
 };
