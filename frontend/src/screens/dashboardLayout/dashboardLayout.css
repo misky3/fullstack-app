@@ -1,3 +1,26 @@
 .topnav{
-    background-color: aqua;
+    background-color: black;
+    color: aliceblue;
+    /* font-size: 40px; */
+    height: 160px;
+}
+
+.topnav .monthly{
+    display: flex;
+    gap: 10px;
+    font-size: 50px;
+    /* line-height: 0.5; */
+}
+
+.topnav .top{
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 33px  40px 24px;
+}
+
+.topnav .account{
+    display: flex;
+    gap: 10px;
 }
