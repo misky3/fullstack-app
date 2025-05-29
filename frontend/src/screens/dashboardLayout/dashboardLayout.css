@@ -30,3 +30,8 @@
     flex-direction: column;
     gap: 10px;
 }
+
+.topnav .title-top{
+    display: flex;
+    gap: 10px;
+}

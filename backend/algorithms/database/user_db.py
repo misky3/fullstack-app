@@ -4,8 +4,6 @@ import os
 def add_user_to_db(name, income, goal):
     conn = sqlite3.connect("db.sqlite3")
     cursor = conn.cursor()
-    print("name ", name)
-    print("income ", income)
     cursor.execute(
         "INSERT INTO users (name, income, goal) VALUES (?,?,?)",
         (name, income, goal)
@@ -16,7 +14,6 @@ def add_user_to_db(name, income, goal):
     return user_id
 
 def get_user_by_id(user_id):
-    print(user_id)
     conn = sqlite3.connect("db.sqlite3")
     conn.row_factory = sqlite3.Row #returns the fetched data in dictionary instead of tuples
     cursor = conn.cursor()
@@ -25,3 +22,12 @@ def get_user_by_id(user_id):
     print(user)
     conn.close()
     return user
+
+def add_expense_by_user(user_id, category, date, amount):
+    conn = sqlite3.connect("db.sqlite3")
+    cursor = conn.cursor()
+    cursor.execute(
+        "INSERT INTO expenses (user_id, category, date_time, amount) VALUES (?,?,?,?)", (user_id, category, date, amount)
+    )
+    conn.commit()
+    conn.close()
