@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from database.user_db import add_user_to_db
+from database.user_db import add_user_to_db, get_user_by_id, add_expense_by_user
 
 user_bp = Blueprint('user', __name__)
 
@@ -13,6 +13,33 @@ def add_user():
     if not name or not income or not goal:
         return jsonify({'error': 'All fields are required'}), 400
     
-    add_user_to_db(name, income, goal)
-    return jsonify({'status': 'User added successfully'}), 201
+    user_id = add_user_to_db(name, income, goal)
+    return jsonify({'status': 'User added successfully', 'userId': user_id}), 201
+
+@user_bp.route('/users/<int:user_id>', methods=['GET'])
+def get_user(user_id):
+    user = get_user_by_id(user_id)
+    if user is None:
+        return jsonify({'error': 'User not Found'}), 404
+    
+    return jsonify({
+        'id':user['id'],
+        'name': user['name'],
+        'income': user['income'],
+        'goal': user['goal']
+    })
+    
+@user_bp.route('/users/add-expense', methods=['POST'])
+def add_expense():
+    data = request.get_json()
+    user_id = data.get('user_id')
+    category = data.get('category')
+    date_time = data.get('date_time')
+    amount = data.get('amount')
+    
+    if not category or not date_time or not amount:
+        return jsonify({'error': 'All fields are required'}), 400
+    
+    add_expense_by_user(user_id, category, date_time, amount)
+    return jsonify({'status': 'Expense added successfully'}), 201
     

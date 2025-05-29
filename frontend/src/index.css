@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: black;
 }
 
 code {
@@ -29,10 +30,17 @@ input {
   border-radius: 4px;
 }
 
+input[type="datetime-local"] {
+  padding: 8px;
+  font-size: 1rem;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
 /* Global button style */
 button {
-  color: white;
-  background-color: #007bff;
+  background-color: yellow;
+  color: black;
   border: none;
   padding: 10px 16px;
   font-size: 16px;
@@ -42,5 +50,13 @@ button {
 
 button:hover {
   background-color: #ffffffa2;
+}
+
+select {
+  padding: 8px;
+  font-size: 1rem;
+  border-radius: 4px;
+  background-color: #333;
+  color: white;
 }
 

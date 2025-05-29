@@ -47,9 +47,17 @@ function Home(){
         body: JSON.stringify({ name, income, goal }),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        const data = await response.json();
+        // const data = await response.json();
         throw new Error(data.message || "Failed to add user.");
+      }
+
+      if(data.userId){
+        localStorage.setItem("userId", data.userId);
+      } else {
+        throw new Error("User ID not returned from server.");
       }
 
       // Success

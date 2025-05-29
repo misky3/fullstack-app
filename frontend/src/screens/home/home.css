@@ -23,8 +23,6 @@
 .home .inputs button{
     /* font-size: 30px; */
     height: 52px;
-    background-color: yellow;
-    color: black;
 }
 
 .home .inputs button:hover {

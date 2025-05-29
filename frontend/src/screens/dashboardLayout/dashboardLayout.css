@@ -1,0 +1,37 @@
+.topnav{
+    background-color: rgb(0, 0, 0);
+    color: aliceblue;
+    /* font-size: 40px; */
+    height: 160px;
+}
+
+.topnav .monthly{
+    display: flex;
+    gap: 10px;
+    font-size: 50px;
+    /* line-height: 0.5; */
+}
+
+.topnav .top{
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 33px  40px 24px;
+}
+
+.topnav .account{
+    display: flex;
+    gap: 10px;
+}
+
+.modal-content .add-expense{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.topnav .title-top{
+    display: flex;
+    gap: 10px;
+}
