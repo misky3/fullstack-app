@@ -1,6 +1,10 @@
 import './dashboard.css';
+import { useState, useEffect } from 'react';
 
 function Dashboard(){
+    const [user, setUser] = useState(null);
+    const userId = localStorage.getItem("userId");
+
     return(
         <div className='dashboard'>
             <h1>Hello</h1>
