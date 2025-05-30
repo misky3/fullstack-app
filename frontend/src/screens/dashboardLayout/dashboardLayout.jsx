@@ -36,7 +36,7 @@ function DashboardLayout(){
 
     const handleCloseModal = () =>{
         const now = new Date();
-        const local = now.toISOString().slice(0,16);
+        const local = now.toISOString().slice(0,10);
 
         setShowModal(false);
         setCategory('');
@@ -45,7 +45,15 @@ function DashboardLayout(){
     };
 
     const handleSubmit = async () =>{
-        const valid = validateExpense({category, dateTime, amount});
+        const now = new Date();
+        const local = now.toISOString().slice(0,16);
+
+        console.log("category: ", category);
+        console.log("date: ", dateTime);
+        console.log("date now: ", local);
+        console.log("amount: ", amount);
+        const valid = validateExpense({category, date:dateTime, amount});
+        console.log("validity: ", valid);
 
         if(!valid){
             alert("Invalid Input");
@@ -53,34 +61,32 @@ function DashboardLayout(){
         }
 
         try {
-      const response = await fetch("http://localhost:5000/api/users/add-expense", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ user_id: userId, category, date_time: dateTime, amount }),
-      });
+            const response = await fetch("http://localhost:5000/api/users/add-expense", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user_id: userId, category, date_time: dateTime, amount }),
+            });
 
-      const data = await response.json();
+            const data = await response.json();
 
-      if (!response.ok) {
-        // const data = await response.json();
-        throw new Error(data.message || "Failed to add user.");
-      }
+            if (!response.ok) {
+                // const data = await response.json();
+                throw new Error(data.message || "Failed to add user.");
+            }
 
-      // Success
-      setError("");
-      const now = new Date();
-      const local = now.toISOString().slice(0,16);
-      setShowModal(false);
-      setCategory('');
-      setDateTime(local);
-      setAmount('');
-      alert("Expense Added");
-      return;
-    } catch (err) {
-      setError(err.message);
-    }
+            // Success
+            setError("");
+            setShowModal(false);
+            setCategory('');
+            setDateTime(local);
+            setAmount('');
+            alert("Expense Added");
+            return;
+            } catch (err) {
+            setError(err.message);
+        }
     };  
 
     return(
@@ -120,7 +126,7 @@ function DashboardLayout(){
                                     <option value="various">Various</option>
                                 </select>
                                 <label>Date</label>
-                                <input type='datetime-local' value={dateTime} onChange={(e) => setDateTime(e.target.value)}/>
+                                <input type='date' value={dateTime.slice(0,10)} onChange={(e) => setDateTime(e.target.value)}/>
                                 <label>Amount</label>
                                 <input 
                                     placeholder='Enter amount'
