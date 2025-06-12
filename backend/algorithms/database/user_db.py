@@ -31,3 +31,12 @@ def add_expense_by_user(user_id, category, date, amount):
     )
     conn.commit()
     conn.close()
+    
+def get_user_list_expenses(user_id):
+    conn = sqlite3.connect("db.sqlite3")
+    conn.row_factory = sqlite3.Row 
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM expenses WHERE user_id = ?", (user_id,))
+    expenses = cursor.fetchall()
+    conn.close()
+    return [dict(expense) for expense in expenses]

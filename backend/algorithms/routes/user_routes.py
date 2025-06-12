@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from database.user_db import add_user_to_db, get_user_by_id, add_expense_by_user
+from database.user_db import add_user_to_db, get_user_by_id, add_expense_by_user, get_user_list_expenses
 
 user_bp = Blueprint('user', __name__)
 
@@ -42,4 +42,15 @@ def add_expense():
     
     add_expense_by_user(user_id, category, date_time, amount)
     return jsonify({'status': 'Expense added successfully'}), 201
+
+@user_bp.route('/users/<int:user_id>/expenses', methods=['GET'])
+def get_expenses(user_id):
+    try:
+        data = get_user_list_expenses(user_id)
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+    if __name__ == "__main__":
+        app.run(debug=True)
     
