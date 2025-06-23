@@ -114,7 +114,7 @@ function DashboardLayout(){
                                     <option value="">-- Select Category --</option>
                                     <option value="debt">Debt</option>
                                     <option value="food">Food</option>
-                                    <option value="rest">Event</option>
+                                    <option value="event">Event</option>
                                     <option value="rent">Rent</option>
                                     <option value="hygiene">Commodity</option>
                                     <option value="subscription">Subscription</option>

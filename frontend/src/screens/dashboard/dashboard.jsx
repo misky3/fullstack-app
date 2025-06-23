@@ -23,7 +23,7 @@ function Dashboard(){
     return(
         <div className='dashboard'>
             <h1>Welcome to Dashboard</h1>
-            <div>
+            <div style={{margin: "80px 32px 87px 32px"}}>
                 <ListOfExpenses userId={userId}/>
             </div>
         </div>

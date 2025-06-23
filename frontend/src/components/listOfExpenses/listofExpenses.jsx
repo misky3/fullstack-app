@@ -1,10 +1,12 @@
 import'./listOfExpenses.css';
 import { useState, useEffect } from 'react';
+import { icons } from '../icons/icons';
 
 function ListOfExpenses({userId}){
-    const [sort, setSort] = useState("");
+    const [sort, setSort] = useState("all");
     const [expenses, setExpenses] = useState([]);
     const [loading, setLoading] = useState(true);
+    const ReloadIcon = icons.reload;
 
       async function fetchExpenses() {
           try{
@@ -25,27 +27,55 @@ function ListOfExpenses({userId}){
         }
     }, [userId]);
 
+    const filteredExpenses = sort === "all"
+        ? expenses
+        :expenses.filter(exp => exp.category === sort);
+
     if (loading) return <p>Loading...</p>;
     if (expenses.length === 0) return (
-       <div>
-            <p>No expenses found.</p>
-            <button onClick={fetchExpenses}>Refresh List</button>
+       <div className='expenseList'>
+        <div>
+            <div className='descript'>
+              <p style={{ color: 'yellow' }}>Descriptions</p>
+              <ReloadIcon width={20} height={20} onClick={fetchExpenses}/>
+            </div>
+        </div>
+        <div>
+            <div>
+                <p style={{fontSize: "42.2px"}}>Looks Like You Haven't Added Any</p>
+                <span style={{color:"green", fontSize: "42.2px"}}>Expenses Yet.</span>
+            </div>
+            <div>
+                <p>No Worries, Just Hit The
+                <span style={{color: "green"}}> 'New Expense'</span> Button To get Started. If you have have click
+                <span style={{color: "green"}}>"Refresh"</span></p>
+            </div>
+        </div>
         </div>
     );
     return(
-        <div>
-          <div>
-            <div>
-              <h3 style={{ color: 'yellow' }}>Descriptions</h3>
-              <button onClick={fetchExpenses}>Refresh List</button>
+        <div className='expenseList'>
+          <div className='filter'>
+            <div className='descript'>
+            <p style={{ color: 'yellow' }}>Descriptions</p>
+            <ReloadIcon width={20} height={20} onClick={fetchExpenses} className='hoverReload'/>
             </div>
-            <div>
-              <div>Filter Expenses| </div>
-              <select value={sort} onChange={(e) => setSort(e.target.value)}>
-                  <option value="">All</option>
-                  <option value="debt">Date</option>
-                  <option value="food">Date</option>
-                  <option value="rest">Event</option>
+            <div style={{border:'1px solid yellow', width: '310px'}}>
+              Filter Expenses | &nbsp;
+              <select 
+               style={{
+                        backgroundColor: "black",    
+                        color: "yellow",             
+                        border: "none",             
+                        padding: "5px 10px",        
+                        borderRadius: "5px",        
+                        outline: "none"             
+                    }}
+              value={sort} onChange={(e) => setSort(e.target.value)}>
+                  <option value="all">All</option>
+                  <option value="debt">Debt</option>
+                  <option value="food">Food</option>
+                  <option value="rest">Rest</option>
                   <option value="rent">Rent</option>
                   <option value="hygiene">Commodity</option>
                   <option value="subscription">Subscription</option>
@@ -55,11 +85,22 @@ function ListOfExpenses({userId}){
           </div>
             <table>
                 <tbody>
-                    {expenses.map((exp, index) => (
-                        <tr key={index}>
-                            <td>{exp.category}</td>
-                            <td>{exp.date_time}</td>
-                            <td>{exp.amount}</td>
+                    {filteredExpenses.map((exp, index) => (
+                        <tr className="expense-row" key={index}>
+                            <td  colSpan={3}>
+                                <div className="expense-info">
+                                    <div className="left">
+                                    {icons[exp.category]({ width: 20, height: 20 })}
+                                    <div className="text-group">
+                                        <div className="category">{exp.category.toUpperCase()}</div>
+                                        <div className="date">{exp.date_time.slice(0,10)}</div>
+                                    </div>
+                                    </div>
+                                    <div className="right">
+                                    ₱{exp.amount}
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
