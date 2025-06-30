@@ -31,6 +31,20 @@ def add_expense_by_user(user_id, category, date, amount):
     )
     conn.commit()
     conn.close()
+
+def update_expense_in_db(expense_id, category, date_time, amount):
+    conn = sqlite3.connect("db.sqlite3")
+    cursor = conn.cursor()
+    
+    query="""
+    UPDATE expenses
+    SET category = ?, date_time = ?, amount = ?
+    WHERE id = ?
+    """
+    
+    cursor.execute(query, (category, date_time, amount, expense_id))
+    conn.commit()
+    conn.close()
     
 def get_user_list_expenses(user_id):
     conn = sqlite3.connect("db.sqlite3")

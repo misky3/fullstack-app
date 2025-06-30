@@ -66,6 +66,28 @@ table {
 
 .right {
   font-weight: bold;
-  color: rgb(238, 144, 144);
   font-size: 1rem;
+}
+
+.row-menu {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 10px;
+  background-color: #1c1c1c;
+  border-bottom: 1px dashed yellow;
+}
+
+.row-menu button {
+  background-color: black;
+  color: yellow;
+  border: 1px solid yellow;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.row-menu button:hover {
+  background-color: yellow;
+  color: black;
 }

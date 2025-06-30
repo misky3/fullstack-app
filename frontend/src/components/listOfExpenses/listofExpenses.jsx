@@ -1,11 +1,19 @@
 import'./listOfExpenses.css';
 import { useState, useEffect } from 'react';
+import { validateExpense } from '../../utils/user';
 import { icons } from '../icons/icons';
+import Modal from '../Modal/Modal';
 
 function ListOfExpenses({userId}){
     const [sort, setSort] = useState("all");
     const [expenses, setExpenses] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [menuOpenIndex, setMenuOpenIndex] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [dateTime, setDateTime] = useState("");
+    const [category, setCategory] = useState("");
+    const [selectedExpenseId, setSelectedExpenseId] = useState(null);
+    const [amount, setAmount] =useState("");
     const ReloadIcon = icons.reload;
 
       async function fetchExpenses() {
@@ -27,6 +35,32 @@ function ListOfExpenses({userId}){
         }
     }, [userId]);
 
+    async function handleSubmitEdit(){
+        try{
+            await fetch(`http://localhost:5000/api/users/update-expense/${selectedExpenseId}`,{
+              method: "PUT",
+              headers:{
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                category,
+                amount, 
+                date_time: dateTime
+              }),
+            });
+
+            setShowModal(false);
+            fetchExpenses();
+            setShowModal(false);
+        }catch (err){
+            console.error("Failed to update expense: ", err)
+        }
+    };
+
+    const handleCloseModal = () =>{
+        setShowModal(false);
+    };
+
     const filteredExpenses = sort === "all"
         ? expenses
         :expenses.filter(exp => exp.category === sort);
@@ -37,15 +71,15 @@ function ListOfExpenses({userId}){
         <div>
             <div className='descript'>
               <p style={{ color: 'yellow' }}>Descriptions</p>
-              <ReloadIcon width={20} height={20} onClick={fetchExpenses}/>
+              <ReloadIcon width={20} height={20} onClick={fetchExpenses} className='hoverReload'/>
             </div>
         </div>
         <div>
-            <div>
+            <div style={{textAlign:"center"}}>
                 <p style={{fontSize: "42.2px"}}>Looks Like You Haven't Added Any</p>
                 <span style={{color:"green", fontSize: "42.2px"}}>Expenses Yet.</span>
             </div>
-            <div>
+            <div style={{textAlign:"center"}}>
                 <p>No Worries, Just Hit The
                 <span style={{color: "green"}}> 'New Expense'</span> Button To get Started. If you have have click
                 <span style={{color: "green"}}>"Refresh"</span></p>
@@ -85,25 +119,66 @@ function ListOfExpenses({userId}){
           </div>
             <table>
                 <tbody>
-                    {filteredExpenses.map((exp, index) => (
-                        <tr className="expense-row" key={index}>
-                            <td  colSpan={3}>
-                                <div className="expense-info">
-                                    <div className="left">
-                                    {icons[exp.category]({ width: 20, height: 20 })}
-                                    <div className="text-group">
-                                        <div className="category">{exp.category.toUpperCase()}</div>
-                                        <div className="date">{exp.date_time.slice(0,10)}</div>
-                                    </div>
-                                    </div>
-                                    <div className="right">
-                                    ₱{exp.amount}
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
+          {filteredExpenses.map((exp, index) => (
+            <>
+              <tr className="expense-row" key={index} onClick={() => setMenuOpenIndex(index === menuOpenIndex ? null : index)}>
+                <td colSpan={3}>
+                  <div className="expense-info">
+                    <div className="left">
+                      {icons[exp.category]({ width: 20, height: 20 })}
+                      <div className="text-group">
+                        <div className="category">{exp.category.toUpperCase()}</div>
+                        <div className="date">Date: {exp.date_time.slice(0, 10)}</div>
+                      </div>
+                    </div>
+                    <div className="right">₱{exp.amount}</div>
+                  </div>
+                </td>
+              </tr>
+
+              {menuOpenIndex === index && (
+                <tr>
+                  <td colSpan={3}>
+                    <div className="row-menu">
+                      <button onClick={() =>{ 
+                        setShowModal(true);
+                        setCategory(exp.category);
+                        setDateTime(exp.date_time);
+                        setAmount(exp.amount);
+                        setSelectedExpenseId(exp.id);
+                        }}>Edit</button>
+
+                      <Modal show={showModal} onClose={handleCloseModal} className='modal-content'>
+                        <div className='add-expense'>
+                                <label>Category</label>
+                                <select value={category} onChange={(e) => setCategory(e.target.value)}>
+                                    <option value="">-- Select Category --</option>
+                                    <option value="debt">Debt</option>
+                                    <option value="food">Food</option>
+                                    <option value="event">Event</option>
+                                    <option value="rent">Rent</option>
+                                    <option value="hygiene">Commodity</option>
+                                    <option value="subscription">Subscription</option>
+                                    <option value="various">Various</option>
+                                </select>
+                                <label>Date</label>
+                                <input type='date' value={dateTime.slice(0,10)} onChange={(e) => setDateTime(e.target.value)}/>
+                                <label>Amount</label>
+                                <input 
+                                    placeholder='Enter amount'
+                                    value={amount}
+                                    onChange={(e) => setAmount(e.target.value)}/>
+                                <button onClick={handleSubmitEdit}>Save changes</button>
+                            </div>
+                      </Modal>
+                      <button onClick={() => alert(`Delete ${exp.category}`)}>Delete</button>
+                    </div>
+                  </td>
+                </tr>
+              )}
+            </>
+          ))}
+        </tbody>
             </table>
         </div>
     );
