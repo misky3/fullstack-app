@@ -36,6 +36,13 @@ function ListOfExpenses({userId}){
     }, [userId]);
 
     async function handleSubmitEdit(){
+
+      const valid = validateExpense({category, date:dateTime, amount});
+
+        if(!valid){
+            alert("Invalid Input");
+            return;
+        }
         try{
             await fetch(`http://localhost:5000/api/users/update-expense/${selectedExpenseId}`,{
               method: "PUT",
@@ -56,6 +63,25 @@ function ListOfExpenses({userId}){
             console.error("Failed to update expense: ", err)
         }
     };
+
+    async function handleDelete(id) {
+
+      if (!window.confirm("Are you sure you want to delete this expense?")) return;
+
+      try {
+        const res = await fetch(`http://localhost:5000/api/users/delete-expense/${id}`, {method: "DELETE"});
+
+        if(res.ok){
+          setExpenses(prev => prev.filter(exp => exp.id !== id));
+          setMenuOpenIndex(null);
+        } else{
+          console.error("Failed to delete expense");
+        }
+      } catch (err){
+        console.error("Error deleting expense: ", err);
+      }
+      
+    }
 
     const handleCloseModal = () =>{
         setShowModal(false);
@@ -171,7 +197,7 @@ function ListOfExpenses({userId}){
                                 <button onClick={handleSubmitEdit}>Save changes</button>
                             </div>
                       </Modal>
-                      <button onClick={() => alert(`Delete ${exp.category}`)}>Delete</button>
+                      <button onClick={() => handleDelete(exp.id)}>Delete</button>
                     </div>
                   </td>
                 </tr>

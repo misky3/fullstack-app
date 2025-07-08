@@ -54,3 +54,10 @@ def get_user_list_expenses(user_id):
     expenses = cursor.fetchall()
     conn.close()
     return [dict(expense) for expense in expenses]
+
+def delete_expense_in_db(expense_id):
+    conn = sqlite3.connect("db.sqlite3")
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM expenses WHERE id = ?", (expense_id,)) # a , since execute expects a tuple even if alone
+    conn.commit()
+    conn.close()
