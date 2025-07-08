@@ -7,6 +7,7 @@ import {ReactComponent as hygieneSvg} from '../../assets/salud.svg';
 import {ReactComponent as savingSvg} from '../../assets/savings.svg';
 import {ReactComponent as subscriptionSvg} from '../../assets/supscription.svg';
 import {ReactComponent as variousSvg} from '../../assets/Various.svg';
+import {ReactComponent as reloadSvg} from '../../assets/icons8-refresh.svg';
 
 const withDefaults = (IconComponent, defaultSize = 48) => (props) => {
     const {width = defaultSize, height = defaultSize, ...rest} = props;
@@ -17,10 +18,11 @@ export const icons ={
     debt: withDefaults(debtSvg),
     food: withDefaults(foodSvg),
     close: withDefaults(closeSvg),
-    rest: withDefaults(restSvg),
+    event: withDefaults(restSvg),
     rent: withDefaults(rentSvg),
     hygiene: withDefaults(hygieneSvg),
     saving: withDefaults(savingSvg),
     subscription: withDefaults(subscriptionSvg),
-    various: withDefaults(variousSvg)
+    various: withDefaults(variousSvg),
+    reload: withDefaults(reloadSvg)
 };

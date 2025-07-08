@@ -48,12 +48,7 @@ function DashboardLayout(){
         const now = new Date();
         const local = now.toISOString().slice(0,16);
 
-        console.log("category: ", category);
-        console.log("date: ", dateTime);
-        console.log("date now: ", local);
-        console.log("amount: ", amount);
         const valid = validateExpense({category, date:dateTime, amount});
-        console.log("validity: ", valid);
 
         if(!valid){
             alert("Invalid Input");
@@ -119,7 +114,7 @@ function DashboardLayout(){
                                     <option value="">-- Select Category --</option>
                                     <option value="debt">Debt</option>
                                     <option value="food">Food</option>
-                                    <option value="rest">Event</option>
+                                    <option value="event">Event</option>
                                     <option value="rent">Rent</option>
                                     <option value="hygiene">Commodity</option>
                                     <option value="subscription">Subscription</option>
