@@ -2,6 +2,7 @@ import './dashboard.css';
 import { useState, useEffect } from 'react';
 
 import ListOfExpenses from '../../components/listOfExpenses/listofExpenses';
+import Calculation from '../../components/calculation/calculation';
 
 function Dashboard(){
     const [user, setUser] = useState(null);
@@ -22,9 +23,9 @@ function Dashboard(){
 
     return(
         <div className='dashboard'>
-            <h1>Welcome to Dashboard</h1>
-            <div style={{margin: "80px 32px 87px 32px"}}>
+            <div className='feature'>
                 <ListOfExpenses userId={userId}/>
+                <Calculation userId={userId}/>
             </div>
         </div>
     );
