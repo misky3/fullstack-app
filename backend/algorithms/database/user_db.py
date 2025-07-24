@@ -19,7 +19,6 @@ def get_user_by_id(user_id):
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM users WHERE id = ?", (user_id,))
     user = cursor.fetchone()
-    print(user)
     conn.close()
     return user
 

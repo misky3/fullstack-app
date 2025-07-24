@@ -4,9 +4,9 @@ import { validateExpense } from '../../utils/user';
 import { icons } from '../icons/icons';
 import Modal from '../Modal/Modal';
 
-function ListOfExpenses({userId}){
+function ListOfExpenses({userId, expenses, setExpenses}){
     const [sort, setSort] = useState("all");
-    const [expenses, setExpenses] = useState([]);
+    // const [expenses, setExpenses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [menuOpenIndex, setMenuOpenIndex] = useState(null);
     const [showModal, setShowModal] = useState(false);
