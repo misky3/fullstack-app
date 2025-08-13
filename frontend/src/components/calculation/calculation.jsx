@@ -3,21 +3,6 @@ import './calculation.css';
 import { useState, useEffect } from 'react';
 
 function Calculation({userId, income, totalExpenses, onReset}){
-
-    // const [user, setUser] = useState(null);
-
-    // useEffect(() => {
-    //     fetch(`https://localhost:5000/api/users/${userId}`)
-    //     .then(res => res.json())
-    //     .then(data =>{
-    //         setUser(data);
-    //     })
-    //     .catch(err =>{
-    //         console.error("Error Fetching data for calculation: ", err);
-    //     });
-    // }, [userId]);
-
-
     return(
         <div className='calculation'>
             <div style={{color:"black"}}>Calculation</div>
