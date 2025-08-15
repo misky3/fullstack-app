@@ -6,7 +6,8 @@ import Modal from "../../components/Modal/Modal";
 import Dollar from "../../assets/dollar.png";
 
 function DashboardLayout(){
-    const [dateTime, setDateTime] = useState("");
+    const [dateOnly, setDateOnly] = useState("");
+    const [fullDateTime, setFullDateTime] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [category, setCategory] = useState("");
     const [amount, setAmount] =useState("");
@@ -30,25 +31,38 @@ function DashboardLayout(){
 
     useEffect(() => {
         const now = new Date();
-        const local = now.toISOString().slice(0,16);
-        setDateTime(local);
+        setDateOnly(now.toISOString().slice(0,10));
+        setFullDateTime(now.toISOString());
     },[]);
 
-    const handleCloseModal = () =>{
+    const handleOpenModal = () => {
         const now = new Date();
-        const local = now.toISOString().slice(0,10);
+        setDateOnly(now.toISOString().slice(0,10));
+        setFullDateTime(now.toISOString());
+        setShowModal(true);
+    };
 
+    const handleCloseModal = () =>{
         setShowModal(false);
         setCategory('');
-        setDateTime(local);
         setAmount('');
+    };
+
+    const handleDateChange = (e) =>{
+        const selectedDate = e.target.value;
+        setDateOnly(selectedDate);
+
+        const now = new Date();
+        const currentTime = now.toTimeString().split(' ')[0];
+        const combined = new Date(`${selectedDate}T${currentTime}`);
+        setFullDateTime(combined.toTimeString());
     };
 
     const handleSubmit = async () =>{
         const now = new Date();
         const local = now.toISOString().slice(0,16);
 
-        const valid = validateExpense({category, date:dateTime, amount});
+        const valid = validateExpense({category, date:dateOnly, amount});
 
         if(!valid){
             alert("Invalid Input");
@@ -61,7 +75,7 @@ function DashboardLayout(){
             headers: {
             "Content-Type": "application/json",
             },
-            body: JSON.stringify({ user_id: userId, category, date_time: dateTime, amount }),
+            body: JSON.stringify({ user_id: userId, category, date_time: fullDateTime, amount }),
             });
 
             const data = await response.json();
@@ -75,7 +89,7 @@ function DashboardLayout(){
             setError("");
             setShowModal(false);
             setCategory('');
-            setDateTime(local);
+            setDateOnly(local);
             setAmount('');
             alert("Expense Added");
             return;
@@ -105,7 +119,7 @@ function DashboardLayout(){
                 </div>
                 <div className='account'>
                     <div>
-                        <button onClick={() => setShowModal(true)}>New Expense</button>
+                        <button onClick={handleOpenModal}>New Expense</button>
 
                         <Modal show={showModal} onClose={handleCloseModal} className='modal-content'>
                             <div className='add-expense'>
@@ -121,7 +135,10 @@ function DashboardLayout(){
                                     <option value="various">Various</option>
                                 </select>
                                 <label>Date</label>
-                                <input type='date' value={dateTime.slice(0,10)} onChange={(e) => setDateTime(e.target.value)}/>
+                                <input type='date' 
+                                    value={dateOnly} 
+                                    onChange={handleDateChange}
+                                />
                                 <label>Amount</label>
                                 <input 
                                     placeholder='Enter amount'

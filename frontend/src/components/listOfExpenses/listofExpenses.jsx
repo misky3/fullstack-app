@@ -4,9 +4,8 @@ import { validateExpense } from '../../utils/user';
 import { icons } from '../icons/icons';
 import Modal from '../Modal/Modal';
 
-function ListOfExpenses({userId}){
+function ListOfExpenses({userId, expenses, setExpenses}){
     const [sort, setSort] = useState("all");
-    const [expenses, setExpenses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [menuOpenIndex, setMenuOpenIndex] = useState(null);
     const [showModal, setShowModal] = useState(false);
@@ -14,6 +13,8 @@ function ListOfExpenses({userId}){
     const [category, setCategory] = useState("");
     const [selectedExpenseId, setSelectedExpenseId] = useState(null);
     const [amount, setAmount] =useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 7;
     const ReloadIcon = icons.reload;
 
       async function fetchExpenses() {
@@ -34,6 +35,10 @@ function ListOfExpenses({userId}){
             fetchExpenses();
         }
     }, [userId]);
+
+    useEffect(()=> {
+      setCurrentPage(1);
+    }, [sort]);
 
     async function handleSubmitEdit(){
 
@@ -91,6 +96,10 @@ function ListOfExpenses({userId}){
         ? expenses
         :expenses.filter(exp => exp.category === sort);
 
+    const startIndex = (currentPage - 1)* itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const paignatedExpenses = filteredExpenses.slice(startIndex, endIndex);
+
     if (loading) return <p>Loading...</p>;
     if (expenses.length === 0) return (
        <div className='expenseList'>
@@ -145,7 +154,7 @@ function ListOfExpenses({userId}){
           </div>
             <table>
                 <tbody>
-          {filteredExpenses.map((exp, index) => (
+          {paignatedExpenses.map((exp, index) => (
             <>
               <tr className="expense-row" key={index} onClick={() => setMenuOpenIndex(index === menuOpenIndex ? null : index)}>
                 <td colSpan={3}>
@@ -206,6 +215,26 @@ function ListOfExpenses({userId}){
           ))}
         </tbody>
             </table>
+
+            <div className='paignation'>
+              <span 
+              className={`navbtn ${currentPage === 1 ? 'disabled' : ''}`}
+              disabled = {currentPage == 1}
+              onClick={() => {if (currentPage > 1) setCurrentPage(prev => prev - 1);}}
+              >&lt;</span>
+
+              <span>Page {currentPage} of {Math.ceil(filteredExpenses.length / itemsPerPage)}</span>
+
+              <span
+              className={`navbtn ${currentPage === Math.ceil(filteredExpenses.length/ itemsPerPage)}`}
+              disabled={currentPage === Math.ceil(filteredExpenses.length / itemsPerPage)}
+              onClick={() => {
+                    if (currentPage < Math.ceil(filteredExpenses.length / itemsPerPage)) {
+                      setCurrentPage(prev => prev + 1);
+                    }}}
+              >&gt;</span>
+            </div>
+
         </div>
     );
 }
