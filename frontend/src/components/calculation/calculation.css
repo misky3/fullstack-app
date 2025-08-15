@@ -1,3 +1,48 @@
 .calculation{
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.calculation .calcu{
+    color: black;
+    font-size: 30px;
+}
+
+.calculation .income{
+    background-color: #FFFDE7;
+    width: 291px;
+    height: fit-content;
+    gap: 4px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.calculation .numbers{
+    display: flex;
+    gap: 8px;
+}
+
+.calculation .box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: black;
+    border-radius: 4px;
+    padding: 5px;
+    width: 142px;
+    height: fit-content;
+}
+
+.calculation .reset{
+    margin: 27px 30px 31px;
+
+    width: 292px;
+    height: 53px;
 }
