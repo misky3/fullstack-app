@@ -129,7 +129,7 @@ function ListOfExpenses({userId, expenses, setExpenses}){
             <p style={{ color: 'yellow' }}>Descriptions</p>
             <ReloadIcon width={20} height={20} onClick={fetchExpenses} className='hoverReload'/>
             </div>
-            <div style={{border:'1px solid yellow', width: '310px'}}>
+            <div style={{border:'1px solid yellow', width: '450px', padding:'5px'}}>
               Filter Expenses | &nbsp;
               <select 
                style={{
