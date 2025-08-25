@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 
 import ListOfExpenses from '../../components/listOfExpenses/listofExpenses';
 import Calculation from '../../components/calculation/calculation';
-import SubscriptionGoals from '../../components/subscriptionGoal/subscriptionGoal';
 
 function Dashboard(){
     const [resetTime, setResetTime] = useState(null);
@@ -48,7 +47,6 @@ function Dashboard(){
                     income={user ? user.income: 0} 
                     totalExpenses={totalExpenses}
                     onReset={() => setResetTime(Date.now())}/>
-                <SubscriptionGoals goal={user ? user.goal: 'none'} userId={userId}/>
             </div>
         </div>
     );

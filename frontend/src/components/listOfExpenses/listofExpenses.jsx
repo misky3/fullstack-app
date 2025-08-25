@@ -96,13 +96,9 @@ function ListOfExpenses({userId, expenses, setExpenses}){
         ? expenses
         :expenses.filter(exp => exp.category === sort);
 
-    const sortedExpenses =[...filteredExpenses].sort(
-      (a, b) => new Date(b.date_time) - new Date(a.date_time)
-    );
-
     const startIndex = (currentPage - 1)* itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const paignatedExpenses = sortedExpenses.slice(startIndex, endIndex);
+    const paignatedExpenses = filteredExpenses.slice(startIndex, endIndex);
 
     if (loading) return <p>Loading...</p>;
     if (expenses.length === 0) return (
@@ -133,7 +129,7 @@ function ListOfExpenses({userId, expenses, setExpenses}){
             <p style={{ color: 'yellow' }}>Descriptions</p>
             <ReloadIcon width={20} height={20} onClick={fetchExpenses} className='hoverReload'/>
             </div>
-            <div style={{border:'1px solid yellow', width: '460px', padding:'5px'}}>
+            <div style={{border:'1px solid yellow', width: '310px'}}>
               Filter Expenses | &nbsp;
               <select 
                style={{
