@@ -130,7 +130,7 @@ function DashboardLayout(){
                                     <option value="food">Food</option>
                                     <option value="event">Event</option>
                                     <option value="rent">Rent</option>
-                                    <option value="hygiene">Commodity</option>
+                                    <option value="hygiene">Hygiene</option>
                                     <option value="subscription">Subscription</option>
                                     <option value="various">Various</option>
                                 </select>

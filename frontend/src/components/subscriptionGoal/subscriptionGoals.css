@@ -3,6 +3,42 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0 15px;
 
     gap: 10px;
+}
+
+.subscript_box .row-item{
+    width: 256px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.subscript_box .row{
+    display: flex;
+    gap: 10px;
+}
+.subscript_box .list{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.subscript_box .logo{
+    width: 40px;
+  height: 40px;
+  border-radius: 50%; /* makes the image circular */
+  border: 2px solid #51D289;
+  object-fit: cover;  /* prevent stretching */
+}
+
+.subscript_box .select-btn{
+    background-color: #51D289;
+    font-weight: bold;
+    border-radius: 22px;
+}
+
+.subscript_box .select-btn:hover{
+    background-color: #51d2899d;
 }

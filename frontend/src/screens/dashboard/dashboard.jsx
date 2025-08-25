@@ -48,7 +48,7 @@ function Dashboard(){
                     income={user ? user.income: 0} 
                     totalExpenses={totalExpenses}
                     onReset={() => setResetTime(Date.now())}/>
-                <SubscriptionGoals/>
+                <SubscriptionGoals goal={user ? user.goal: 'none'} userId={userId}/>
             </div>
         </div>
     );
