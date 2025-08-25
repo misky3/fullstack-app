@@ -1,0 +1,33 @@
+.doughnut-chart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+}
+
+.doughnut {
+  width: 232px;
+  height: 232px;
+  border-radius: 50%;
+  background: conic-gradient(#ff6384 60%, #36a2eb 60% 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.doughnut::before {
+  content: '';
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.center-text {
+  position: absolute;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333;
+}

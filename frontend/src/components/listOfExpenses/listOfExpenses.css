@@ -1,0 +1,112 @@
+.expenseList{
+    width: 100%;
+}
+.expenseList .descript{
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.expenseList .filter{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.expenseList .hoverReload:hover{
+    background-color: rgba(255, 255, 255, 0.459);
+    cursor: pointer;
+}
+
+.expense-row {
+  padding: 10px;
+  border-top: 1px dashed #cccccc85;
+  padding: 10px;
+  width: 100%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.expense-row:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.178);
+}
+
+.expense-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%; 
+}
+
+.left {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.text-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.category {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: rgb(255, 255, 255);
+}
+
+.date {
+  font-size: 0.85rem;
+  color: gray;
+}
+
+.right {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.row-menu {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 10px;
+  background-color: #1c1c1c;
+  border-bottom: 1px dashed yellow;
+}
+
+.row-menu button {
+  background-color: black;
+  color: yellow;
+  border: 1px solid yellow;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.row-menu button:hover {
+  background-color: yellow;
+  color: black;
+}
+
+.expenseList .navbtn {
+  display: inline-block;
+  padding: 0.5em 1em;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.expenseList .navbtn:hover{
+  background-color: #ffffff2d;
+}
+
+.expenseList .navbtn.disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
