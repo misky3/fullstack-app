@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from database.user_db import add_user_to_db, get_user_by_id, add_expense_by_user
+from database.user_db import add_user_to_db, get_user_by_id, add_expense_by_user, get_user_list_expenses, update_expense_in_db, delete_expense_in_db
 
 user_bp = Blueprint('user', __name__)
 
@@ -42,4 +42,35 @@ def add_expense():
     
     add_expense_by_user(user_id, category, date_time, amount)
     return jsonify({'status': 'Expense added successfully'}), 201
+
+@user_bp.route('/users/update-expense/<int:expense_id>', methods=['PUT'])
+def update_expense(expense_id):
+    data =request.get_json()
+    category = data.get('category')
+    date_time = data.get('date_time')
+    amount = data.get('amount')
+    
+    update_expense_in_db(expense_id, category, date_time, amount)
+    return jsonify({'status': 'Expense updated successfully'})
+
+@user_bp.route('/users/delete-expense/<int:expense_id>', methods=['DELETE'])
+def delete_expense(expense_id):
+    try:
+        print(f"Attempting to delete expense ID: {expense_id}")
+        delete_expense_in_db(expense_id)
+        return jsonify({"message": "Expense deleted"}), 200
+    except Exception as e:
+        print("Error in delete_expense route:", e)
+        return jsonify({"error": str(e)}), 500
+
+@user_bp.route('/users/<int:user_id>/expenses', methods=['GET'])
+def get_expenses(user_id):
+    try:
+        data = get_user_list_expenses(user_id)
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+    if __name__ == "__main__":
+        app.run(debug=True)
     
